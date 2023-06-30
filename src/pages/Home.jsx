@@ -4,6 +4,7 @@ import bg_img_dark from '../assets/images/bg-desktop-dark.jpg';
 import icon_sun from '../assets/images/icon-sun.svg';
 import icon_moon from '../assets/images/icon-moon.svg';
 import icon_check from '../assets/images/icon-check.svg';
+import icon_cross from '../assets/images/icon-cross.svg';
 import Tasks from '../components/Tasks';
 
 const Home = () => {
@@ -31,6 +32,11 @@ const Home = () => {
     }
   };
 
+  const handleDelete = (task) => {
+    const updatedList = list.filter((item) => item !== task);
+    setList(updatedList);
+  };
+
   return (
     <section className='w-screen h-screen flex flex-col justify-center items-center bg-[#d6e0ed] font-Josefin'>
       <div className='relative w-full h-3/5 flex justify-center items-center overflow-hidden'>
@@ -51,8 +57,15 @@ const Home = () => {
             </button>
           </div>
 
-          <form onSubmit={handleSubmit} className={`w-full h-16 px-5 py-3 shadow-lg mt-2 flex gap-5 justify-center items-center ${isDarkMode ? "bg-[#2a2b3d]" : "bg-white"} rounded-md`}>
-            <button onClick={() => setToggle(!toggle)} type='button' className={`w-[34px] h-8 flex justify-center items-center rounded-full ${toggle && "bg-gradient-to-br"} from-[#7bbbf9] to-[#9e7fec] border-2 ${isDarkMode ? "border-[#353648]" : "border-gray-300"}`}>
+          <form
+            onSubmit={handleSubmit}
+            className={`w-full h-16 px-5 py-3 shadow-lg mt-2 flex gap-5 justify-center items-center ${isDarkMode ? "bg-[#2a2b3d]" : "bg-white"} rounded-md`}
+          >
+            <button
+              onClick={() => setToggle(!toggle)}
+              type='button'
+              className={`w-[34px] h-8 flex justify-center items-center rounded-full ${toggle && "bg-gradient-to-br"} from-[#7bbbf9] to-[#9e7fec] border-2 ${isDarkMode ? "border-[#353648]" : "border-gray-300]"}`}
+            >
               {toggle && <img src={icon_check} alt="icon check" />}
             </button>
             <input
@@ -69,8 +82,8 @@ const Home = () => {
           <div className={`w-full min-h-[calc(100%-6px)] rounded-md shadow-2xl flex flex-col justify-between ${isDarkMode ? "bg-[#2a2b3d]" : "bg-white"}`}>
             <div className='overflow-y-scroll scrollbar-hide scroll-smooth'>
               {list.map((item, index) => (
-                <div key={index} className={`p-5 text-xl border-b flex gap-3 items-center ${isDarkMode ? "text-gray-300 border-gray-700" : "text-gray-700 border-gray-300"}`}>
-                  <Tasks item={item} isDarkMode={isDarkMode} />
+                <div key={index} className={`p-5 text-xl border-b flex gap-3 justify-between items-center ${isDarkMode ? "text-gray-300 border-gray-700" : "text-gray-700 border-gray-300"}`}>
+                  <Tasks item={item} isDarkMode={isDarkMode} onDelete={handleDelete} />
                 </div>
               ))}
             </div>
