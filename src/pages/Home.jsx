@@ -32,14 +32,30 @@ const Home = () => {
     }
   };
 
-  const handleDelete = (task) => {
-    const updatedList = list.filter((item) => item !== task);
+  const handleDelete = (item) => {
+    const updatedList = list.filter((task) => task !== item);
+    setList(updatedList);
+  };
+
+  const handleDragStart = (e, index) => {
+    e.dataTransfer.setData('text/plain', index);
+  };
+
+  const handleDragOver = (e) => {
+    e.preventDefault();
+  };
+
+  const handleDrop = (e, index) => {
+    const droppedIndex = e.dataTransfer.getData('text/plain');
+    const updatedList = [...list];
+    const removedItem = updatedList.splice(droppedIndex, 1)[0];
+    updatedList.splice(index, 0, removedItem);
     setList(updatedList);
   };
 
   return (
     <section className='w-screen h-screen flex flex-col justify-center items-center bg-[#d6e0ed] font-Josefin'>
-      <div className='relative w-full h-3/5 flex justify-center items-center overflow-hidden'>
+      <div className='relative w-full h-[calc(100%-280px)] flex justify-center items-center overflow-hidden'>
         <img
           src={isDarkMode ? bg_img_dark : bg_img_light}
           alt="bg img"
@@ -64,7 +80,7 @@ const Home = () => {
             <button
               onClick={() => setToggle(!toggle)}
               type='button'
-              className={`w-[34px] h-8 flex justify-center items-center rounded-full ${toggle && "bg-gradient-to-br"} from-[#7bbbf9] to-[#9e7fec] border-2 ${isDarkMode ? "border-[#353648]" : "border-gray-300]"}`}
+              className={`w-[34px] h-8 flex justify-center items-center rounded-full ${toggle && "bg-gradient-to-br"} from-[#7bbbf9] to-[#9e7fec] border-2 ${isDarkMode ? "border-[#353648]" : "border-gray-300"}`}
             >
               {toggle && <img src={icon_check} alt="icon check" />}
             </button>
@@ -79,15 +95,28 @@ const Home = () => {
             />
           </form>
 
-          <div className={`w-full min-h-[calc(100%-6px)] rounded-md shadow-2xl flex flex-col justify-between ${isDarkMode ? "bg-[#2a2b3d]" : "bg-white"}`}>
-            <div className='overflow-y-scroll scrollbar-hide scroll-smooth'>
+          <div
+            className={`w-full min-h-[calc(100%-6px)] rounded-md shadow-2xl flex flex-col justify-between ${isDarkMode ? "bg-[#2a2b3d]" : "bg-white"}`}
+          >
+            <div
+              className='overflow-y-scroll scrollbar-hide scroll-smooth'
+              onDragOver={handleDragOver}
+            >
               {list.map((item, index) => (
-                <div key={index} className={`p-5 text-xl border-b flex gap-3 justify-between items-center ${isDarkMode ? "text-gray-300 border-gray-700" : "text-gray-700 border-gray-300"}`}>
+                <div
+                  key={index}
+                  className={`p-5 text-xl border-b flex gap-3 justify-between items-center ${isDarkMode ? "text-gray-300 border-gray-700" : "text-gray-700 border-gray-300"}`}
+                  draggable
+                  onDragStart={(e) => handleDragStart(e, index)}
+                  onDrop={(e) => handleDrop(e, index)}
+                >
                   <Tasks item={item} isDarkMode={isDarkMode} onDelete={handleDelete} />
                 </div>
               ))}
             </div>
-            <div className={`w-full p-5 flex justify-between border-t ${isDarkMode ? "text-gray-500 border-gray-700" : "text-gray-400 border-gray-300"}`}>
+            <div
+              className={`w-full p-5 flex justify-between border-t ${isDarkMode ? "text-gray-500 border-gray-700" : "text-gray-400 border-gray-300"}`}
+            >
               <p>{list.length} items left</p>
               <nav className='flex gap-4 ml-10'>
                 <button className={`hover:text-gray-600`}>All</button>
