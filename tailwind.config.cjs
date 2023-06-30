@@ -7,7 +7,7 @@ module.exports = {
 				"3xl": "0 0 35px 10px #87fbb0",
 			},
 			fontFamily: {
-				Manrope: ["Manrope", "sans-serif"],
+				Josefin: ["Josefin Sans", "sans-serif"],
 			},
 		},
 
