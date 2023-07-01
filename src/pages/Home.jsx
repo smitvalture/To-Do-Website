@@ -151,7 +151,6 @@ const Home = () => {
             {list.map((item, index) => (
               <div
                 key={index}
-                className={`p-5 text-xl border-b flex gap-3 justify-between items-center ${isDarkMode ? "text-gray-300 border-gray-700" : "text-gray-700 border-gray-300"}`}
                 draggable
                 onDragStart={(e) => handleDragStart(e, index)}
                 onDrop={(e) => handleDrop(e, index)}

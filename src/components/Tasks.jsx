@@ -4,6 +4,7 @@ import icon_cross from '../assets/images/icon-cross.svg';
 
 const Tasks = ({ item, isDarkMode, onDelete }) => {
     const [toggle, setToggle] = useState(false);
+    const [isHovered, setIsHovered] = useState(false);
 
     useEffect(() => {
         const storedToggle = localStorage.getItem(`toggle_${item}`);
@@ -24,19 +25,26 @@ const Tasks = ({ item, isDarkMode, onDelete }) => {
     };
 
     return (
-        <>
+        <div
+            className={`p-5 text-xl border-b flex gap-3 justify-between items-center ${isDarkMode ? 'text-gray-300 border-gray-700' : 'text-gray-700 border-gray-300'} ${isHovered ? 'hovered' : ''}`}
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+        >
             <button
                 onClick={handleToggle}
-                className={`w-9 h-8 flex justify-center items-center rounded-full ${toggle && 'bg-gradient-to-br'} from-[#7bbbf9] to-[#9e7fec] border-2 ${isDarkMode ? 'border-[#353648]' : 'border-gray-300'
-                    }`}
+                className={`w-9 h-8 flex justify-center items-center rounded-full ${toggle && 'bg-gradient-to-br'} from-[#7bbbf9] to-[#9e7fec] border-2 ${isDarkMode ? 'border-[#353648]' : 'border-gray-300'}`}
             >
                 {toggle && <img src={icon_check} alt="icon check" />}
             </button>
             <p className={`ml-2 pt-2 w-full ${toggle && 'line-through text-gray-500'}`}>{item}</p>
-            <button type="button" onClick={handleDelete}>
+            <button
+                type="button"
+                className={`opacity-0 transition-opacity duration-500 ${isHovered && 'opacity-100'}`}
+                onClick={handleDelete}
+            >
                 <img src={icon_cross} alt="cross icon" />
             </button>
-        </>
+        </div>
     );
 };
 
