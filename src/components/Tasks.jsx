@@ -17,7 +17,7 @@ const Tasks = ({ item, isDarkMode, onDelete }) => {
             >
                 {toggle && <img src={icon_check} alt="icon check" />}
             </button>
-            <p className={`ml-2 w-full ${toggle && "line-through"}`}>{item}</p>
+            <p className={`ml-2 pt-2 w-full ${toggle && "line-through"}`}>{item}</p>
             <button type='button' onClick={() => handleDelete()}>
                 <img src={icon_cross} alt="cross icon" />
             </button>
