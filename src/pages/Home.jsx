@@ -10,7 +10,7 @@ import Tasks from '../components/Tasks';
 
 const Home = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
-  const [toggle, setToggle] = useState(false);
+  const [toggle, setToggle] = useState({});
   const [input, setInput] = useState("");
   const [list, setList] = useState([]);
 
@@ -52,6 +52,7 @@ const Home = () => {
     const updatedList = list.filter((task) => task !== item);
     setList(updatedList);
     localStorage.setItem("taskList", JSON.stringify(updatedList));
+    localStorage.removeItem(`toggle_${item}`);
   };
 
   const handleDragStart = (e, index) => {
@@ -71,6 +72,27 @@ const Home = () => {
     localStorage.setItem("taskList", JSON.stringify(updatedList));
   };
 
+  useEffect(() => {
+    list.forEach((item) => {
+      const storedToggle = localStorage.getItem(`toggle_${item}`);
+      if (storedToggle) {
+        setToggle((prevToggle) => ({
+          ...prevToggle,
+          [item]: JSON.parse(storedToggle),
+        }));
+      }
+    });
+  }, [list]);
+
+  const handleToggle = (item) => {
+    const updatedToggle = !toggle[item];
+    setToggle((prevToggle) => ({
+      ...prevToggle,
+      [item]: updatedToggle,
+    }));
+    localStorage.setItem(`toggle_${item}`, JSON.stringify(updatedToggle));
+  };
+
   return (
     <section className={`relative w-screen h-screen flex flex-col md:justify-center items-center overflow-hidden ${isDarkMode ? "bg-[#1e1e28]" : "bg-[#fafafa]"} font-Josefin`}>
       <div className='w-full h-fit flex justify-center items-center'>
@@ -87,7 +109,7 @@ const Home = () => {
       </div>
 
 
-      <div className='absolute max-h-[calc(100%-250px)] px-6 pt-10 md:px-0 md:pt-0 md:max-w-[650px] w-full h-full gap-6 flex flex-col items-center'>
+      <div className='absolute top-[70px] max-h-[calc(100%-250px)] px-6 pt-10 md:px-0 md:pt-0 md:max-w-[650px] w-full h-full gap-6 flex flex-col items-center'>
         <div className='w-full flex justify-between items-center'>
           <h1 className={`text-${isDarkMode ? "gray-300" : "white"} text-3xl md:text-6xl font-semibold tracking-[16px] md:tracking-[24px]`}>TODO</h1>
           <button onClick={toggleTheme}>
@@ -102,11 +124,11 @@ const Home = () => {
           className={`w-full h-16 p-5 shadow-lg mt-2 flex gap-5 justify-center items-center ${isDarkMode ? "bg-[#2a2b3d]" : "bg-white"} rounded-md`}
         >
           <button
-            onClick={() => setToggle(!toggle)}
+            onClick={() => handleToggle("input")}
             type='button'
-            className={`w-[34px] h-8 flex justify-center items-center rounded-full ${toggle && "bg-gradient-to-br"} from-[#7bbbf9] to-[#9e7fec] border-2 ${isDarkMode ? "border-[#353648]" : "border-gray-300"}`}
+            className={`w-[34px] h-8 flex justify-center items-center rounded-full ${toggle["input"] && "bg-gradient-to-br"} from-[#7bbbf9] to-[#9e7fec] border-2 ${isDarkMode ? "border-[#353648]" : "border-gray-300"}`}
           >
-            {toggle && <img src={icon_check} alt="icon check" />}
+            {toggle["input"] && <img src={icon_check} alt="icon check" />}
           </button>
           <input
             className={`w-full h-full ${isDarkMode ? "text-gray-300" : "text-gray-500"} text-xl bg-transparent outline-none`}
@@ -134,7 +156,7 @@ const Home = () => {
                 onDragStart={(e) => handleDragStart(e, index)}
                 onDrop={(e) => handleDrop(e, index)}
               >
-                <Tasks item={item} isDarkMode={isDarkMode} onDelete={handleDelete} />
+                <Tasks item={item} isDarkMode={isDarkMode} onDelete={handleDelete} toggle={toggle[item]} onToggle={() => handleToggle(item)} />
               </div>
             ))}
           </div>
@@ -150,7 +172,9 @@ const Home = () => {
             <button type='button' className={`${isDarkMode ? "hover:text-gray-300" : "hover:text-gray-700"}`}>Clear completed</button>
           </div>
         </div>
+
       </div>
+      <footer className={`h-full flex justify-center items-end mb-14 ${isDarkMode ? "text-gray-500" : "text-gray-400"}`}>Drag & Drop to reorder the list</footer>
     </section>
   );
 };
