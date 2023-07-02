@@ -31,6 +31,17 @@ const Home = () => {
     }
   }, []);
 
+  useEffect(() => {
+    list.forEach((item) => {
+      const storedToggle = localStorage.getItem(`toggle_${item}`);
+      if (storedToggle) {
+        setToggle((prevToggle) => ({
+          ...prevToggle,
+          [item]: JSON.parse(storedToggle),
+        }));
+      }
+    });
+  }, [list]);
 
   const toggleTheme = () => {
     setIsDarkMode((prevMode) => !prevMode);
@@ -71,18 +82,6 @@ const Home = () => {
     setList(updatedList);
     localStorage.setItem("taskList", JSON.stringify(updatedList));
   };
-
-  useEffect(() => {
-    list.forEach((item) => {
-      const storedToggle = localStorage.getItem(`toggle_${item}`);
-      if (storedToggle) {
-        setToggle((prevToggle) => ({
-          ...prevToggle,
-          [item]: JSON.parse(storedToggle),
-        }));
-      }
-    });
-  }, [list]);
 
   const handleToggle = (item) => {
     const updatedToggle = !toggle[item];
