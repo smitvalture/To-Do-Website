@@ -126,7 +126,7 @@ const Home = () => {
           <button
             onClick={() => handleToggle("input")}
             type='button'
-            className={`w-[34px] h-8 flex justify-center items-center rounded-full ${toggle["input"] && "bg-gradient-to-br"} from-[#7bbbf9] to-[#9e7fec] border-2 ${isDarkMode ? "border-[#353648]" : "border-gray-300"}`}
+            className={`w-7 md:w-[34px] h-6 md:h-8 flex justify-center items-center rounded-full ${toggle["input"] && "bg-gradient-to-br"} from-[#7bbbf9] to-[#9e7fec] border-2 ${isDarkMode ? "border-[#353648]" : "border-gray-300"}`}
           >
             {toggle["input"] && <img src={icon_check} alt="icon check" />}
           </button>
@@ -142,7 +142,7 @@ const Home = () => {
         </form>
 
         <div
-          className={`w-full md:h-3/4 rounded-md shadow-2xl flex flex-col justify-between ${isDarkMode ? "bg-[#2a2b3d]" : "bg-white"}`}
+          className={`w-full h-3/4 rounded-md shadow-2xl flex flex-col justify-between ${isDarkMode ? "bg-[#2a2b3d]" : "bg-white"}`}
         >
           <div
             className='overflow-y-scroll scrollbar-hide scroll-smooth'
@@ -163,7 +163,7 @@ const Home = () => {
             className={`w-full p-5 flex justify-between font-medium border-t ${isDarkMode ? "text-gray-500 border-gray-700" : "text-gray-400 border-gray-300"}`}
           >
             <p>{list.length} items left</p>
-            <nav className='flex gap-4 ml-10'>
+            <nav className='hidden md:flex gap-4 ml-10'>
               <button className={`${isDarkMode ? "hover:text-gray-300" : "hover:text-gray-700"}`}>All</button>
               <button className={`${isDarkMode ? "hover:text-gray-300" : "hover:text-gray-700"}`}>Active</button>
               <button className={`${isDarkMode ? "hover:text-gray-300" : "hover:text-gray-700"}`}>Completed</button>
@@ -171,9 +171,13 @@ const Home = () => {
             <button type='button' className={`${isDarkMode ? "hover:text-gray-300" : "hover:text-gray-700"}`}>Clear completed</button>
           </div>
         </div>
-
+        <nav className={`md:hidden flex justify-center items-center gap-4 w-full py-3 rounded-md shadow-2xl text-gray-500 ${isDarkMode ? "bg-[#2a2b3d]" : "bg-white"}`}>
+          <button className={`${isDarkMode ? "hover:text-gray-300" : "hover:text-gray-700"}`}>All</button>
+          <button className={`${isDarkMode ? "hover:text-gray-300" : "hover:text-gray-700"}`}>Active</button>
+          <button className={`${isDarkMode ? "hover:text-gray-300" : "hover:text-gray-700"}`}>Completed</button>
+        </nav>
       </div>
-      <footer className={`h-full flex justify-center items-end mb-14 ${isDarkMode ? "text-gray-500" : "text-gray-400"}`}>Drag & Drop to reorder the list</footer>
+      <footer className={`h-full flex justify-center items-end mb-10 md:mb-14 ${isDarkMode ? "text-gray-500" : "text-gray-400"}`}>Drag & Drop to reorder the list</footer>
     </section>
   );
 };
