@@ -32,7 +32,7 @@ const Tasks = ({ item, isDarkMode, onDelete }) => {
         >
             <button
                 onClick={handleToggle}
-                className={`md:w-9 w-8 h-[26px] md:h-8 flex justify-center items-center rounded-full ${toggle && 'bg-gradient-to-br'} from-[#7bbbf9] to-[#9e7fec] border-2 ${isDarkMode ? 'border-[#353648]' : 'border-gray-300'}`}
+                className={`md:w-9 w-8 h-[26px] md:h-8 flex justify-center items-center rounded-full ${toggle && 'bg-gradient-to-br'} from-[#7bbbf9] to-[#8064c6] border-2 ${isDarkMode ? 'border-[#353648]' : 'border-gray-300'}`}
             >
                 {toggle && <img src={icon_check} alt="icon check" />}
             </button>

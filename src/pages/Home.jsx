@@ -125,7 +125,7 @@ const Home = () => {
           <button
             onClick={() => handleToggle("input")}
             type='button'
-            className={`w-7 md:w-[34px] h-6 md:h-8 flex justify-center items-center rounded-full ${toggle["input"] && "bg-gradient-to-br"} from-[#7bbbf9] to-[#9e7fec] border-2 ${isDarkMode ? "border-[#353648]" : "border-gray-300"}`}
+            className={`w-7 md:w-[34px] h-6 md:h-8 flex justify-center items-center rounded-full ${toggle["input"] && "bg-gradient-to-br"} from-[#7bbbf9] to-[#8064c6] border-2 ${isDarkMode ? "border-[#353648]" : "border-gray-300"}`}
           >
             {toggle["input"] && <img src={icon_check} alt="icon check" />}
           </button>
