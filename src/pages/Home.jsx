@@ -111,11 +111,9 @@ const Home = () => {
       <div className='absolute top-[70px] max-h-[calc(100%-250px)] px-6 pt-10 md:px-0 md:pt-0 md:max-w-[650px] w-full h-full gap-6 flex flex-col items-center'>
         <div className='w-full flex justify-between items-center'>
           <h1 className={`text-${isDarkMode ? "gray-300" : "white"} text-3xl md:text-6xl font-semibold tracking-[16px] md:tracking-[24px]`}>TODO</h1>
-          <button onClick={toggleTheme}>
-            {
-              <img src={isDarkMode ? icon_sun : icon_moon} alt="theme icon" />
-            }
-          </button>
+          {
+            <img className='cursor-pointer' onClick={toggleTheme} src={isDarkMode ? icon_sun : icon_moon} alt="theme icon" />
+          }
         </div>
 
         <form
